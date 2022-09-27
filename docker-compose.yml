@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+    tomcat:
+        image: treinamento-java-web:latest
+        container_name: treinamento-java-web
+        ports:
+            - 8080:8080
+            - 8000:8000
+            - 9012:9012
+        environment:
+            JVM_MEMORY: -Xms1024m -Xmx1024m
+            JPDA_ADDRESS: 0.0.0.0:8000
+            JPDA_TRANSPORT: dt_socket
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+            - /dev/urandom:/dev/random:ro
+            - $PWD/deploy/tomcat/conf/server.xml:/usr/local/tomcat/conf/server.xml
+            - $PWD/deploy/tomcat/conf/context.xml:/usr/local/tomcat/conf/context.xml
+            - $PWD/deploy/tomcat/logs:/usr/local/tomcat/logs
+            - $PWD/target/treinamento:/usr/local/tomcat/webapps/treinamento
+        networks:
+            treinamento:
+#        depends_on:
+#            - postgres
+
+#    postgres:
+#        image: postgres:13-alpine
+#        container_name: treinamento-postgres
+#        environment:
+#            POSTGRES_PASSWORD: "postgres"
+#        ports:
+#            - "5432:5432"
+#        volumes:
+#            - /etc/localtime:/etc/localtime:ro
+#            - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+#            - /dev/urandom:/dev/random:ro
+#            - $PWD/deploy/postgres/data:/var/lib/postgresql/data:rw
+#            - $PWD/deploy/postgres/initdb:/docker-entrypoint-initdb.d:rw
+#        networks:
+#            treinamento:
+
+networks:
+    treinamento:
+        name: treinamento
