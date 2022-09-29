@@ -10,5 +10,26 @@
     <name>label</name>
     <tag-class>br.com.touchhealth.treinamento.tags.LabelTag</tag-class>
     <body-content>scriptless</body-content>
+    <attribute>
+      <name>size</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  <tag>
+    <description>Field</description>
+    <name>field</name>
+    <tag-class>br.com.touchhealth.treinamento.tags.FieldTag</tag-class>
+    <body-content>scriptless</body-content>
+    <attribute>
+      <name>labelSize</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>label</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
   </tag>
 </taglib>

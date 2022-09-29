@@ -12,6 +12,11 @@
         .label, .treinamento-label {
             display: inline-block;
             width: 100px;
+            margin-right: 8px;
+        }
+        .treinamento-field {
+            display: block;
+            margin: 8px 0 8px 0;
         }
         .fraco {
             opacity: 0.4;

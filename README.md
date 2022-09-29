@@ -445,3 +445,72 @@ Double val = processor.eval("(a + b) * c");
 [Tagdoc](https://jakarta.ee/specifications/tags/1.2/tagdocs/)
 
 ### Construindo sua propria TagLib
+
+Para construir sua própria tag de componente, são necessarias pelo menos duas coisas:
+
+1. A implementação da Tag em sí
+
+```java
+package br.com.touchhealth.treinamento.tags;
+
+import java.io.IOException;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.SimpleTagSupport;
+
+public class LabelTag extends SimpleTagSupport {
+
+    private Integer size;
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public void doTag() throws JspException, IOException {
+        JspWriter out = this.getJspContext().getOut();
+        out.print("<span class=\"treinamento-label\"");
+        if (size != null) {
+            out.print(" style=\"width: "+ size +"px;\"");
+        }
+        out.print(">");
+        getJspBody().invoke(null);
+        out.print("</span>");
+    }
+
+}
+```
+
+2. A declaração da existencia da tag em um arquivo .tld
+`META-INF/treinamento-tags.tld`
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+  <description>Biblioteca de componentes do Treinamento</description>
+  <display-name>Treinamento Tags</display-name>
+  <tlib-version>1.0</tlib-version>
+  <short-name>treinamento</short-name>
+  <uri>http://www.touchtec.com.br/treinamento-tags</uri>
+  <tag>
+    <description>Label</description>
+    <name>label</name>
+    <tag-class>br.com.touchhealth.treinamento.tags.LabelTag</tag-class>
+    <body-content>scriptless</body-content>
+    <attribute>
+      <name>size</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+</taglib>
+```
+
+Seu uso fica assim:
+
+```html
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="t" uri="http://www.touchtec.com.br/treinamento-tags" %>
+<t:label>a:</t:label>
+<t:label size="200">b:</t:label>
+```
