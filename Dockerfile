@@ -13,5 +13,5 @@ COPY src /opt/workspace/src
 RUN mvn clean package
 
 FROM tomcat:9-jdk8-temurin-focal
-COPY --from=builder /opt/workspace/target/treinamento /usr/local/tomcat/webapps
+COPY --from=builder /opt/workspace/target/treinamento /usr/local/tomcat/webapps/treinamento
 CMD ["catalina.sh", "jpda", "run"]

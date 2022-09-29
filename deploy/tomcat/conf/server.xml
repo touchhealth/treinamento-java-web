@@ -164,7 +164,7 @@
                        prefix="localhost_access_log" suffix=".txt"
                        pattern="%h %l %u %t &quot;%r&quot; %s %b" />
 
-                <Context docBase="/usr/local/tomcat/webapps/treinamento" path="/treinamento" reloadable="false" />
+                <Context docBase="/usr/local/tomcat/webapps/treinamento" path="/treinamento" reloadable="true" />
 
             </Host>
         </Engine>

@@ -18,6 +18,7 @@ services:
             - /dev/urandom:/dev/random:ro
             - $PWD/deploy/tomcat/conf/server.xml:/usr/local/tomcat/conf/server.xml
             - $PWD/deploy/tomcat/conf/context.xml:/usr/local/tomcat/conf/context.xml
+            - $PWD/deploy/tomcat/conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
             - $PWD/deploy/tomcat/logs:/usr/local/tomcat/logs
             - $PWD/target/treinamento:/usr/local/tomcat/webapps/treinamento
         networks:

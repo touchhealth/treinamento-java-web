@@ -10,16 +10,16 @@ import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 //@WebFilter(urlPatterns = { "/servlet/*", "/admin/*" })
-public class AuditFilter extends HttpFilter {
+public class HeaderFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws IOException, ServletException {
-        long t1 = System.currentTimeMillis();
-        System.out.println("AuditFilter Antes: " + req.getRequestURL());
+        System.out.println("HeaderFilter Antes " + req.getRequestURL());
         chain.doFilter(req, res);
-        long t2 = System.currentTimeMillis();
-        System.out.println("AuditFilter Depois: " + (t2 - t1) + " ms");
+        res.addHeader("X-HEALS-VERSION", "1.0");
+        System.out.println("HeaderFilter depois " + req.getRequestURL());
     }
 }

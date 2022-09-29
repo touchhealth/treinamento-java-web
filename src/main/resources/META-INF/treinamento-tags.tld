@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+  <description>Biblioteca de componentes do Treinamento</description>
+  <display-name>Treinamento Tags</display-name>
+  <tlib-version>1.0</tlib-version>
+  <short-name>treinamento</short-name>
+  <uri>http://www.touchtec.com.br/treinamento-tags</uri>
+  <tag>
+    <description>Label</description>
+    <name>label</name>
+    <tag-class>br.com.touchhealth.treinamento.tags.LabelTag</tag-class>
+    <body-content>scriptless</body-content>
+  </tag>
+</taglib>
