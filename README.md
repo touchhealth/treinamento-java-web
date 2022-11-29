@@ -10,7 +10,7 @@ Neste projeto vamos apresentar os conceitos básicos de Java para Web:
 
 ## Setup e Pré-Requisitos
 
-1. Tenha o docker instalado na sua máquina
+1. Tenha o docker e docker-compose instalado na sua máquina
 2. Opcionais (mas importantes)
    1. Java 8 instalado
    2. Maven 3.6+ instalado
@@ -363,7 +363,28 @@ possiblidade de usar algumas tags especiais
 É a sintaxe muito comum nos projetos da Touch, arquivo seja um XML bem formado compatível com o XHTML.
 Essa sintaxe possui algumas construções diferentes. 
 
-#### Scriptlets 
+#### Diretivas
+
+##### @page
+
+É usada para fazer a configuração básica da página jsp. Os atributos mais importantes são:
+
+| Atributos | Descrição |
+|---|---|
+| language      | sempre java |
+| import   	    | Permite a página JSp importar pacotes e classes que serão utilizados pela página. |
+| session	    | Define se a página fará uso de sessão, o valor padrão é true. |
+| errorPage	    | Define o caminho relativo a uma página de erro, caso ocorra uma exceção. |
+| contentType   | Informa o tipo de saída do documento. O valor default é text/html. |
+| isErrorPage	| Informa se a página é uma página de erro. |
+| pageEncoding	| Define o caracter enconding da página. |
+
+
+##### @include
+
+##### @taglib
+
+### Scriptlets 
 
 Corresponde ao uso de código java dentro da sintaxe HTML. É considerado "feio", pelo abuso que pode ser cometido, 
 por exemplo implementando toda a lógica da view e controller no próprio JSP. Porém hoje vemos frameworks modernos como 
