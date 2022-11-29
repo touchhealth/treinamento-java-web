@@ -369,20 +369,74 @@ Essa sintaxe possui algumas construções diferentes.
 
 É usada para fazer a configuração básica da página jsp. Os atributos mais importantes são:
 
-| Atributos | Descrição |
-|---|---|
-| language      | sempre java |
-| import   	    | Permite a página JSp importar pacotes e classes que serão utilizados pela página. |
-| session	    | Define se a página fará uso de sessão, o valor padrão é true. |
-| errorPage	    | Define o caminho relativo a uma página de erro, caso ocorra uma exceção. |
-| contentType   | Informa o tipo de saída do documento. O valor default é text/html. |
-| isErrorPage	| Informa se a página é uma página de erro. |
-| pageEncoding	| Define o caracter enconding da página. |
+| Atributos     | Descrição                                                                         |
+|---------------|-----------------------------------------------------------------------------------|
+| language      | sempre `java`                                                                     |
+| import        | Permite a página JSp importar pacotes e classes que serão utilizados pela página. |
+| session	     | Define se a página fará uso de sessão, o valor padrão é true.                     |
+| errorPage     | Define o caminho relativo a uma página de erro, caso ocorra uma exceção.          |
+| contentType   | Informa o tipo de saída do documento. O valor default é text/html.                |
+| isErrorPage	 | Informa se a página é uma página de erro.                                         |
+| pageEncoding	 | Define o caracter enconding da página.                                            |
 
+JSP:
+```
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"  %>
+<%@ page import="java.util.* %>
+<%@ page import="java.text.* %>
+```
+
+JSPX:
+```
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" version="2.0" 
+          xmlns:jsp="http://java.sun.com/JSP/Page">
+    <jsp:directive.page contentType="text/html" pageEncoding="UTF-8" />
+    <jsp:directive.page import="java.util.*" />
+    <jsp:directive.page import="java.text.*" />
+</jsp:root>
+```
 
 ##### @include
 
+É usada para incluir uma outra página jsp ou jspx dentro da atual.
+
+JSP:
+```
+<%@include file="terceiro.jsp"%>
+```
+
+JSPX:
+```
+<jsp:include page="terceiro.jsp"/>
+```
+
 ##### @taglib
+
+É usada para declarar taglibs ou tags
+
+JSP:
+```
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="t" uri="http://www.touchtec.com.br/treinamento-tags" %>
+```
+
+JSPX:
+```
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" version="2.0"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:t="http://www.touchtec.com.br/treinamento-tags">
+</jsp:root>
+```
+
+##### @tag
+
+Usada para a declaração de tag files
+
+JSP:
+```
+<%@ tag pageEncoding="UTF-8" %>
+```
 
 ### Scriptlets 
 
@@ -423,6 +477,18 @@ React fazendo um uso semelhante.
     <div><jsp:expression><![CDATA[i]]></jsp:expression></div>
 <jsp:scriptlet><![CDATA[}]]></jsp:scriptlet>
 ```
+
+##### Objetos Implícitos
+
+| Nome        | Tipo                                   |
+|-------------|----------------------------------------|
+| application | javax.servlet.ServletContext           |
+| config      | javax.servlet.ServletConfig            |
+| out         | javax.servlet.jsp.JspWriter            |
+| pageContext | javax.servlet.jsp.PageContext          |
+| request     | javax.servlet.http.HttpServletRequest  |
+| response    | javax.servlet.http.HttpServletResponse |
+| session     | javax.servlet.http.HttpSession         |
 
 ### Expression Language
 
@@ -535,3 +601,134 @@ Seu uso fica assim:
 <t:label>a:</t:label>
 <t:label size="200">b:</t:label>
 ```
+
+### Tag Files
+
+[JEE 5 Tutorial - Tag Files](https://docs.oracle.com/javaee/5/tutorial/doc/bnama.html)
+
+Usar tag files é uma forma simples de criar componentes de tela mais simples, ele utiliza fragmentos de código JSP 
+e devem ser armazenadas na pasta `WEB-INF/tags/` com a extensão `.tag`:
+
+``` 
+<%@ tag pageEncoding="UTF-8" %>
+<b>Cabeçalho Padrão</b>
+```
+
+#### Diretivas
+
+| Diretiva  | Descrição                                                                                              |
+|-----------|--------------------------------------------------------------------------------------------------------|
+| taglib    | Análoga a usada para taglibs.                                                                          |
+| include   | Análoga a include padrão, porém algumas sintaxes podem não ser suportadas em includes usados nas tags. |
+| tag       | Similar a diretiva page, mas para arquivos do tipo tag.                                                |
+| attribute | Declara um atributo da tag.                                                                            |
+| variable  | Declara uma variável EL que será exposta pela tag para a página.                                       |
+
+#### Atributos importantes da diretiva tag
+
+| Atributo           | Descrição                                                 |
+|--------------------|-----------------------------------------------------------|
+| body-content       | empty, tagdependent, ou scriptless. (Default scriptless). |
+| dynamic-attributes | Indica se a tag suporta atributos dinâmicos.              |
+| import             | mesmo da diretiva page.                                   |
+| pageEncoding       | mesmo da diretiva page.                                   |
+
+#### Atributos importantes da diretiva attribute
+
+| Atributo    | Descrição                                                           |
+|-------------|---------------------------------------------------------------------|
+| name        | O nome do atributo.                                                 |
+| required    | Se o atributo é obrigatório (true) ou não (false). Default é false. |
+| rtexprvalue | Se o atributo pode ser definido por uma expressão. Default é true.  |
+| type        | Tipo do atributo. Default é java.lang.String.                       |
+| fragment    | Define se o atributo é um fragmento de JSP                          |
+
+#### Atributos importantes da diretiva variable
+
+| Atributo                          | Descrição                                                                                                                                                                                                                                                                                                   |
+|-----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name-given ou name-from-attribute | Define uma variável EL para ser usada na pagina. Ou name-given ou name-from-attribute deve ser especificada. <br/> Se name-given for especificada, o valor é o nome da variável. <br/>Se name-from-attribute for especificado, o nome da variável é o valor de um atributo cujo nome foi especificado aqui. |
+| alias                             | define variable com um nome local para ser usada pela tag. Requerido no caso do `name-from-attribute` ter sido utilizado, e por isso não conhecemos o nome real da variável.                                                                                                                                |
+| variable-class                    | O tipo da variavel. Default é java.lang.String.                                                                                                                                                                                                                                                             |
+| declare                           | Se a variável é declarada ou não. Default é true.                                                                                                                                                                                                                                                           |
+| scope                             | AT_BEGIN, AT_END, ou NESTED. Default é NESTED.                                                                                                                                                                                                                                                              |
+
+### Exemplos
+
+**Tag com Parametros**: WEB-INF/tags/treinamento/olamundo.tag
+
+```html
+<%@ tag pageEncoding="UTF-8" %>
+<%@ attribute name="greeting" required="true" %>
+<span>Olá Mundo, bem vindo <b>${greeting}</b></span>
+```
+
+**Tag com Corpo**: WEB-INF/tags/treinamento/field.tag
+
+```html
+<%@ tag pageEncoding="UTF-8" %>
+<%@ taglib prefix="t" uri="http://www.touchtec.com.br/treinamento-tags" %>
+<%@ attribute name="label" required="true" %>
+<div class="treinamento-field">
+	<t:label>${label}</t:label>
+	<jsp:doBody />
+</div>
+```
+
+**Tag com Corpo e Variáveis**: WEB-INF/tags/treinamento/iterate.tag
+
+```html
+<%@ tag pageEncoding="UTF-8" %>
+<%@ attribute name="iterations" required="true" type="java.lang.Integer" %>
+<%@ attribute name="var" required="true" rtexprvalue="false" %>
+<%@ variable alias="it" name-from-attribute="var" %>
+<%
+for (int i = 0; i < iterations; i++) {
+	jspContext.setAttribute("it", i);
+%>
+	<jsp:doBody />
+<%	
+}
+%>
+```
+
+**Tag com Corpo e Fragmentos**: WEB-INF/tags/treinamento/layout.tag
+
+```html
+<%@ tag pageEncoding="UTF-8" %>
+<%@ attribute name="head" required="true" fragment="true" %>
+<%@ attribute name="left" fragment="true" %>
+<div style="position: relative;height: 480px; overflow: auto;">
+	<div style="position: absolute;top: 0;left: 0;right: 0;height: 80px">
+		<jsp:invoke fragment="head"/>
+	</div>
+	<div style="position: absolute;top: 80px;left: 0;bottom: 0;width: 340px">
+		<jsp:invoke fragment="left"/>
+	</div>
+	<div style="position: absolute;top: 80px;left: 340px;bottom: 0;right: 0">
+		<jsp:doBody />
+	</div>
+</div>
+```
+
+**Uso no JSP**:
+
+````html
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="tt" tagdir="/WEB-INF/tags/treinamento" %>
+<tt:layout>
+	<jsp:attribute name="head">
+		<tt:simple></tt:simple>
+	</jsp:attribute>
+	<jsp:attribute name="left">
+		<tt:olamundo greeting="Fernando" />
+	</jsp:attribute>
+	<jsp:body>
+		<ul>	
+			<tt:iterate iterations="5" var="k">
+				<li>Iteração ${k}</li>
+			</tt:iterate>
+		</ul>
+	</jsp:body>
+</tt:layout>
+````

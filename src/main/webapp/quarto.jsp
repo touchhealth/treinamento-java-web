@@ -1,3 +1,4 @@
+<%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -12,7 +13,13 @@
     </style>
 </head>
 <body class="container">
-<jsp:include page="terceiro.jsp"/>
+<%-- <jsp:include page="terceiro.jsp"/> --%>
+<%@include file="terceiro.jsp"%>
+
+<% for (int i = 0; i < 10; i++) { %>
+<div>indice <%= i %></div>
+<% } %>
+
 <div class="card" style="margin-top: 16px">
     <div class="card-body">
         <h5 class="card-title">Pessoa</h5>
